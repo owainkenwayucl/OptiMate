@@ -10,6 +10,7 @@ trilinos_ver=${trilinos_ver:-trilinos-release-12-10-1}
 location=$(dirname $(readlink -f ${0}))
 time_stamp=$(date -u +%s)
 install_prefix=${install_prefix:-$(pwd)/Optimet-${time_stamp}}
+make_slots=${make_slots:-12}
 
 echo "Optimate installation location: ${location}"
 
@@ -24,12 +25,12 @@ echo "Fetching and installing Trilinos (for Belos)"
 
 git clone ${trilinos_repo}
 cd $(basename ${trilinos_repo})
+echo " --  Setting Trilinos version to ${trilinos_ver}"
 git checkout ${trilinos_ver}
-
 mkdir build
 cd build
 cmake .. -DTPL_ENABLE_MPI=ON -DTrilinos_ENABLE_Belos=ON -DCMAKE_INSTALL_PREFIX=${install_prefix}/belos_install
-make -j 12
+make -j ${make_slots}
 make install
 export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:${install_prefix}/belos_install
 
@@ -39,12 +40,13 @@ cd ${install_prefix}
 echo "Fetching and building Optimet"
 git clone ${optimet_repo}
 cd $(basename ${optimet_repo})
+echo " --  Setting Optimet version to ${optimet_ver}"
 git checkout ${optimet_ver}
 
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -Ddompi=ON -Ddotesting=OFF -Ddobenchmarks=OFF -DCMAKE_EXE_LINKER_FLAGS=-lgfortran
-make -j 12
+make -j ${make_slots}
 
 echo "Installing in ${install_prefix}/bin (/lib for library)"
 
