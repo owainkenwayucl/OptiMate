@@ -14,6 +14,6 @@ This will fetch and build Belos and OPTIMET v1.0.1 in the current directory with
 You can control this process by passing variables, so for example if you have your own fork of OPTIMET in a local git repo, you can do:
 
 ```bash
-optimet_repo=/path/to/rep optimet_version=master /path/to/optimate/OptiMate.sh
+optimet_repo=/path/to/rep optimet_ver=master /path/to/optimate/OptiMate.sh
 
 ```
