@@ -17,3 +17,5 @@ You can control this process by passing variables, so for example if you have yo
 optimet_repo=/path/to/repo optimet_ver=master /path/to/optimate/OptiMate.sh
 
 ```
+
+If you want to modify the way things are build (particularly libraries) you can modify `deps.sh`.  One thing to be aware of is that you cannot build OPTIMET using the version of Scalapack included in current (at least 2017 onwards) MKL because it lacks the required BLACS object files that OPTIMET needs.  It is therefore necessary to compile Scalapack from source.
